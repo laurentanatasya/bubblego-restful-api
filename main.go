@@ -21,8 +21,13 @@ func main() {
 	productController := controller.NewProductController(productService)
 	router := app.NewRouter(productController)
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000" 
+	}
+
 	server := http.Server{
-		Addr:    "localhost:3000",
+		Addr:    ":" + port,
 		Handler: middleware.NewAuthMiddleware(router),
 	}
 
